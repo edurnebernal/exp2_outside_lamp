@@ -1,0 +1,700 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Brightness Comparison Experiment</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: sans-serif;
+      text-align: center;
+    }
+    .image-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    
+    
+    .image-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1vw;
+      margin-top: 40px;
+      flex-wrap: nowrap; /* Prevent stacking */
+    }
+
+    
+    .image-box {
+      
+      border: 5px solid transparent;
+      padding: 10px;
+      display: inline-block;
+
+    }
+    
+    .image-box.hidden {
+      display: none;
+    }
+
+
+    .image-box.selected {
+      border-color: red;
+    }
+    
+    img {
+      max-width: 80%;
+      height: auto;
+    }
+
+    #task {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    #trial-count {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+    #break-screen {
+      display: none;
+      font-size: 20px;
+      margin-top: 30px;
+    }
+    #download {
+      margin-top: 30px;
+      display: none;
+    }
+
+    
+    #noiseImage {
+      max-width: 100%;
+      height: auto;
+      display: none; /* Initially hidden */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+
+  </style>
+</head>
+
+<body>
+
+  <div id="instruction-screen" style="color: white; text-align: center; padding: 40px; max-width: 70%; margin: auto;">
+  <h2>Instructions: Please, press F11 to allow full screen mode.</h2>
+  <p style="color: red;">WARNING: Do not use Firefox explorer.</p>
+  <p><strong>Goal:</strong> You will be shown pairs of images depicting a living room containing a lamp with a visible lightbulb on a table.</p>
+  <p>Your task is to select the image in which <strong>the lightbulb emits more light.</strong> For example, in this photo, the lightbulb on the left emits more light. In other words, the light bulb on the left has a higher wattage.</p>
+  <img src="instructions.png" alt="Brightness Examples" style="max-width: 40%; height: auto; margin-top: 20px;">
+  <p><strong>Procedure: </strong>You will begin with four practice trials to get familiar with the task.</p>
+
+  <ol style="text-align: left;">
+    <li>In each trial, two images will appear side by side on the screen.</li>
+    <li>Choose the image where the lightbulb is <strong>brighter</strong>, meaning it appears as emitting more light. Question: <strong>Which lightbulb emits more light?</strong></li>
+    <li>Use the left or right arrow keys on the keyboard to indicate your choice (right or left image), and press the space key to confirm.</li>
+    <li>After each selection, a noisy image will briefly appear before the next pair is shown.</li>
+    <li>Repeat steps 2–4 until all trials are completed. The number of remaining trials will be displayed on the screen.</li>
+  </ol>
+  <p style="color: red;">WARNING: There are attention check comparisons, please pay attention to the instructions. <br>Failing to comply may result in exclusion from the study.</p>
+
+  <button onclick="startCalibration()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Start Calibration</button>
+</div>
+
+
+<div id="calibration-screen" style="display: none; color: white; text-align: center; padding: 40px;">
+  <h2>Screen Calibration:</h2>
+  <p>Before starting the experiment, please adjust your monitor's brightness so that you can distinguish all the squares below.</p>
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 0px; margin: 20px auto; max-width: 1200px;">
+    <div style="width: 40px; height: 40px; background-color: rgb(2,2,2);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(11,11,11);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(22,22,22);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(33,33,33);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(44,44,44);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(55,55,55);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(66,66,66);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(77,77,77);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(88,88,88);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(99,99,99);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(110,110,110);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(121,121,121);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(132,132,132);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(143,143,143);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(154,154,154);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(165,165,165);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(176,176,176);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(187,187,187);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(198,198,198);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(209,209,209);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(220,220,220);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(231,231,231);"></div>
+    <div style="width: 40px; height: 40px; background-color: rgb(242,242,242);"></div>
+  </div>
+  <button onclick="startExperiment()" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Start Experiment</button>
+</div>
+
+
+<div id="survey-screen" style="display: none;">
+   <div class="testbox" style="display: flex; justify-content: center; align-items: center; height: inherit; padding: 3px;">
+    <form id="form" autocomplete="off">
+
+      <h4>Age: <span>*</span></h4>
+      <input id="Age" type="text" name="age" placeholder="Age" required />
+
+      <h4>Gender: Which gender do you identify with? <span>*</span></h4>
+      <select id="gender" required onchange="toggleOtherGender(this)">
+        <option value="" disabled selected>Select your gender</option>
+        <option value="Woman">Woman</option>
+        <option value="Man">Man</option>
+        <option value="Non-binary">Non-binary</option>
+        <option value="Transgender-Woman">Transgender - Woman</option>
+        <option value="Transgender-Man">Transgender - Man</option>
+        <option value="Prefer not to say">Prefer not to say</option>
+        <option value="Other">Not listed</option>
+      </select>
+      <input id="otherGender" type="text" name="otherGender" placeholder="If not listed, specify" style="display:none;" />
+
+      <script>
+        function toggleOtherGender(select) {
+          const otherInput = document.getElementById('otherGender');
+          otherInput.style.display = select.value === 'Other' ? 'block' : 'none';
+        }
+      </script>
+
+      <h4>Do you have any vision condition or disorder (e.g., myopia, presbyopia, etc.)? <span>*</span></h4>
+      <div id="visualAcy" class="question-answer">
+        <select name="visionCondition" id="visionCondition" required onchange="toggleOtherInput(this)">
+          <option value="" disabled selected>Select an option</option>
+          <option value="no">No</option>
+          <option value="myopia">Myopia</option>
+          <option value="hyperopia">Hyperopia</option>
+          <option value="presbyopia">Presbyopia</option>
+          <option value="color-blindness">Color-blindness</option>
+          <option value="astigmatism">Astigmatism</option>
+          <option value="other">Other</option>
+        </select>
+        <div id="otherVisionInput" style="display:none; margin-top: 8px;">
+          <input type="text" name="visionConditionOther" placeholder="Please specify" />
+        </div>
+      </div>
+
+      <script>
+        function toggleOtherInput(select) {
+          const otherInput = document.getElementById('otherVisionInput');
+          otherInput.style.display = select.value === 'other' ? 'block' : 'none';
+        }
+      </script>
+
+      <p class="question">Do you wear corrective glasses or contact lenses? <span>*</span></p>
+      <div id="correctedVision" class="question-answer">
+        <label><input type="radio" value="yes" name="glasses" required /> Yes</label>
+        <label><input type="radio" value="no" name="glasses" required /> No</label>
+      </div>
+
+    
+    <h4>How often do you work with high dynamic range (HDR) images or tone mapping techniques? <span>*</span></h4>
+    <select id="hdrFamiliarity" required>
+      <option value="" disabled selected>Select a number</option>
+      <option value="1">1 - I do not know what that is</option>
+      <option value="2">2 - I have heard of them but have not used them</option>
+      <option value="3">3 - I have used HDR or tone mapping occasionally</option>
+      <option value="4">4 - I use HDR images regularly in specific tasks</option>
+      <option value="5">5 - I am deeply involved in HDR content creation or research</option>
+    </select>
+
+
+    <h4>To what extent are you familiar with the field of computer graphics? <span>*</span></h4>
+    <select id="cgFamiliarity" required>
+      <option value="" disabled selected>Select a number</option>
+      <option value="1">1 - Not familiar at all</option>
+      <option value="2">2 - I have seen visual content made with CG but have not created any</option>
+      <option value="3">3 - I have created or analyzed CG visuals occasionally</option>
+      <option value="4">4 - I work with CG regularly</option>
+      <option value="5">5 - I am deeply involved in CG content creation or research</option>
+    </select>
+
+    <h4>Have you had training or education in photography? <span>*</span></h4>
+    <div id="PhotoTraining" class="question-answer">
+        <label><input type="radio" value="yes" name="photoansw" required /> Yes</label>
+        <label><input type="radio" value="no" name="photoansw" required /> No</label>
+    </div>
+
+    <h4>How would you describe your familiarity with photography? <span>*</span></h4>
+    <select id="photoFamiliarity" required>
+      <option value="" disabled selected>Select a number</option>
+      <option value="1">1 - I rarely take or edit photos</option>
+      <option value="2">2 - I take casual photos with my phone</option>
+      <option value="3">3 - I take photos using my phone and camera occasionally</option>
+      <option value="4">4 - I actively practice photography and have a solid understanding of its underlying principles</option>
+      <option value="5">5 - I dedicate significant time to photography and post-processing and fully understand its technical aspects</option>
+    </select>
+
+
+    <h4>How frequently do you adjust visual properties such as brightness, exposure, or color in photos or videos? <span>*</span></h4>
+    <select id="photoEditingFamiliarity" required>
+      <option value="" disabled selected>Select a number</option>
+      <option value="1">1 - I never edit visual content</option>
+      <option value="2">2 - I have tried editing a few times</option>
+      <option value="3">3 - I edit occasionally for personal use</option>
+      <option value="4">4 - I edit regularly for personal or creative projects</option>
+      <option value="5">5 - I edit visual content almost daily and fully understand its technical aspects</option>
+    </select>
+
+    <h4>Have you had training or education in painting? <span>*</span></h4>
+    <div id="PaintTraining" class="question-answer">
+        <label><input type="radio" value="yes" name="paintTraining" required /> Yes</label>
+        <label><input type="radio" value="no" name="paintTraining" required /> No</label>
+    </div>
+
+    <h4>Have you had training or education in illustration? <span>*</span></h4>
+    <div id="IllustrationTraining" class="question-answer">
+        <label><input type="radio" value="yes" name="illustrationTraining" required /> Yes</label>
+        <label><input type="radio" value="no" name="illustrationTraining" required /> No</label>
+    </div>
+    
+    <h4>What is your level of experience with visual arts such as painting, drawing, or digital illustration? <span>*</span></h4>
+    <select id="artisticArtsFamiliarity" required>
+      <option value="" disabled selected>Select a number</option>
+      <option value="1">1 - I do not engage in artistic activities</option>
+      <option value="2">2 - I occasionally sketch or paint for fun</option>
+      <option value="3">3 - I practice regularly but not professionally</option>
+      <option value="4">4 - I have formal training or technical knowledge and practice consistently</option>
+      <option value="5">5 - I pursue visual arts seriously or professionally, with a strong grasp of both technique and theory</option>
+    </select>
+
+    <h4>Please describe the strategy you used to select the brighter lamp:</h4>
+    <textarea id="brightnessStrategy" name="brightnessStrategy" cols="70" rows="4" placeholder="Describe your approach..." required></textarea>
+    </form>
+  </div>
+  <p id="log" style="text-align: center; font-size: large;"></p>
+  <button id="finishBtn" style="margin-top: 20px; padding: 10px 20px; font-size: 16px;">Finish</button>
+
+</div>
+
+
+<div id="experiment-screen" style="display: none;">
+
+  <h1 id="task">Which image shows higher brightness values in the lightbulb pixels?</h1>
+  <div id="trial-count"></div>
+  <div class="image-container">
+    <div id="imageA" class="image-box"><span>A</span><br><img src="" alt="Image A"></div>
+    <div id="imageB" class="image-box"><span>B</span><br><img src="" alt="Image B"></div>
+  </div>
+  <div id="break-screen">Batch complete. You can take a break. Press 'C' to continue.</div>
+  <button id="download">Download Results</button>
+
+</div>
+
+<img id="noiseImage" src="images/noise.jpg" alt="Noise" />
+
+
+
+  <script>
+    // Store prolific ID 
+    
+    const urlParams = new URLSearchParams(window.location.search);
+
+    let prolificId = urlParams.get('PROLIFIC_PID');
+    const studyId = urlParams.get('STUDY_ID');
+    const sessionId = urlParams.get('SESSION_ID');
+
+    if (prolificId) {
+      console.log(`Prolific ID: ${prolificId}`);
+    } else {
+      console.error('Prolific ID not found in URL');
+      prolificId = 'testExp2' + Math.floor(Math.random() * 1000); // Fallback for testing
+    }
+
+    if (studyId) {
+      console.log(`Study ID: ${studyId}`);
+    } else {
+      console.error('Study ID not found in URL');
+      studyId = 'outsidelamp'; // Fallback for testing
+    }
+    if (sessionId) {
+      console.log(`Session ID: ${sessionId}`);
+    } else {
+      console.error('Session ID not found in URL');
+    }
+
+    const trainingPairs = [
+    ['night_14', 'night_500'],
+    ['night_500', 'noon_14'],
+    ['noon_14', 'noon_500'],
+    ['sunset_14', 'sunset_14']
+    ];
+    
+    let currentSelection = null;
+
+    let pairs = [[`sunset_14`, `noon_14`],
+    [`sunset_14`, `dusk_14`],
+    [`dusk_14`, `noon_14`],
+    [`dusk_14`, `night_14`],
+    [`night_14`, `noon_14`],
+    [`night_14`, `sunset_14`]
+  ];
+
+    let sentinel = [
+      ['night_14', 'night_500'],
+      ['noon_14', 'noon_500'],
+      ['night_14', 'night_500'],
+      ['noon_14', 'noon_500'],
+      ['night_14', 'night_500'],
+      ['noon_14', 'noon_500'],
+      ['night_14', 'night_500'],
+      ['noon_14', 'noon_500'],
+      ['night_14', 'night_500'],
+      ['noon_14', 'noon_500']
+    ];
+
+    const n_batches = 10;
+    let currentTrial = 0;
+    let currentBatch = 0;
+    let isTraining = true;
+    let selected = null;
+    let startTime = 0;
+    let results = [];
+
+    let flip_array = [];
+    // Append half ones and half zeros to the flip array
+    for (let i = 0; i < (pairs.length * n_batches) / 2; i++) {
+      flip_array.push(1);
+      flip_array.push(0);
+    }
+
+    // shuffle the flip array
+    shuffle(flip_array);
+
+    const images = [];
+    pairs.forEach(pair => {
+        images.push(`./images/${pair[0]}.png`);
+        images.push(`./images/${pair[1]}.png`);
+    });
+
+    sentinel.forEach(sent => {
+        images.push(`./images/${sent[1]}.png`);
+    });
+    
+    const imageMap = {};
+    for (const path in images) {
+      const fileName = images[path].split('/').pop().replace('.png', '');
+      const img = new Image();
+      img.src = images[path];
+      img.name = fileName;
+      // print in the console the name of the image
+      console.log(`Loading image: ${fileName}`);
+      imageMap[fileName] = img;
+    }
+
+    // Clone pairs to current_pairs
+    let current_pairs = pairs.slice();
+    current_pairs.push(sentinel[currentBatch]);
+
+    shuffle(current_pairs);
+
+    const imageA = document.querySelector('#imageA img');
+    const imageB = document.querySelector('#imageB img');
+    const boxA = document.getElementById('imageA');
+    const boxB = document.getElementById('imageB');
+    const trialCount = document.getElementById('trial-count');
+    const breakScreen = document.getElementById('break-screen');
+    const finishBtn = document.getElementById('finishBtn');
+    const trials_per_batch = current_pairs.length;
+    
+    function startCalibration() {
+      document.getElementById('instruction-screen').style.display = 'none';
+      document.getElementById('calibration-screen').style.display = 'block';
+    }
+
+    function startExperiment() {
+      document.getElementById('calibration-screen').style.display = 'none';
+      document.getElementById('experiment-screen').style.display = 'block';
+      loadTrial(trainingPairs[currentTrial]); // Start your experiment
+    }
+
+
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    function loadTrial(pair, flip_value) {
+      // boxA.classList.add('hidden');
+      // boxB.classList.add('hidden');
+      boxA.classList.remove('selected');
+      boxB.classList.remove('selected');
+      selected = null;
+      const [img1, img2] = flip_value ? [imageMap[pair[1]], imageMap[pair[0]]] : [imageMap[pair[0]], imageMap[pair[1]]];
+      // Hide images initially
+      // imageA.classList.remove('hidden');
+      // imageB.classList.remove('hidden');
+      // print in the console the names of the images
+      console.log(`Loading images: ${pair[1]} and ${pair[0]}`);
+
+      imageA.src = img1.src;
+      imageB.src = img2.src;
+      // print in the console the names of the images
+      console.log(`Loading trial: ${img1.name} vs ${img2.name}`);
+      imageA.dataset.label = flip_value ? 'B' : 'A';
+      imageB.dataset.label = flip_value ? 'A' : 'B';
+      imageA.dataset.name = img1.name;
+      imageB.dataset.name = img2.name;
+      trialCount.textContent = `${isTraining ? 'Training' : ''} Trial ${(currentTrial + 1) + currentBatch * trials_per_batch} of ${isTraining ? trainingPairs.length : trials_per_batch * n_batches}: Use arrows to select A or B, then press space to confirm.`;
+      startTime = performance.now();
+    }
+
+    function recordSelection(choice) {
+      const endTime = performance.now();
+      selected = choice;
+      boxA.classList.toggle('selected', choice === 'A');
+      boxB.classList.toggle('selected', choice === 'B');
+      const aName = imageA.dataset.name;
+      const bName = imageB.dataset.name;
+      const aSelected = (selected === 'A') ? true : false;
+      results.push({
+        batch: isTraining ? 'training' : currentBatch + 1,
+        trial: currentTrial + 1,
+        imageA: aName,
+        imageB: bName,
+        Aselected: aSelected,
+        reactionTime: Math.round(endTime - startTime)
+      });
+    }
+
+    
+    function nextTrial() {
+      currentTrial++;
+      if (isTraining && currentTrial < trainingPairs.length) {
+        showNoiseImage(() => loadTrial(trainingPairs[currentTrial], flip_array[currentTrial + currentBatch * trials_per_batch]));
+      } else if (isTraining) {
+        isTraining = false;
+        currentTrial = 0;
+        shuffle(current_pairs);
+        shuffle(flip_array);
+        showNoiseImage(() => loadTrial(current_pairs[currentTrial], flip_array[currentTrial + currentBatch * trials_per_batch]));
+      } else if (currentTrial < trials_per_batch) {
+        showNoiseImage(() => loadTrial(current_pairs[currentTrial], flip_array[currentTrial + currentBatch * trials_per_batch]));
+      } else {
+        currentBatch++;
+        if (currentBatch < n_batches) {
+          currentTrial = 0;
+          current_pairs = pairs.slice();
+          // Add one sentinel pair to the end of the current pairs
+          current_pairs.push(sentinel[currentBatch]);
+          shuffle(current_pairs);
+          shuffle(flip_array);
+          // Only make the break if has passed 3 batches
+          if (currentBatch % 3 === 0) {
+            breakScreen.style.display = 'block';
+            // Hide image boxes
+            boxA.classList.add('hidden');
+            boxB.classList.add('hidden');
+          } else {
+            showNoiseImage(() => loadTrial(current_pairs[currentTrial], flip_array[currentTrial + currentBatch * trials_per_batch]));
+          }
+
+        } else {
+          trialCount.textContent = 'Thank You! Now, we need to ask you a few questions about your experience.';
+          imageA.src = '';
+          imageB.src = '';
+          boxA.classList.add('hidden');
+          boxB.classList.add('hidden');
+          // Wait for 2 seconds before showing survey
+          setTimeout(() => {
+            document.getElementById('experiment-screen').style.display = 'none';
+            document.getElementById('survey-screen').style.display = 'block';
+          }, 2000);
+
+        }
+      }
+    }
+
+
+    function showNoiseImage(callback) {
+      // Clear previous images to prevent flicker
+      imageA.src = '';
+      imageB.src = '';
+      boxA.classList.remove('selected');
+      boxB.classList.remove('selected');
+
+      // Show noise image full screen
+      const noise = document.getElementById('noiseImage');
+      noise.style.display = 'block';
+
+      // Wait 1 second, then hide noise and run callback
+      setTimeout(() => {
+        noise.style.display = 'none';
+        if (callback) callback(); // Load next trial only after noise is hidden
+      }, 1000);
+    }
+
+
+    document.addEventListener('keydown', (e) => {
+      if (breakScreen.style.display === 'block' && e.key.toLowerCase() === 'c') {
+        breakScreen.style.display = 'none';
+        boxA.classList.remove('hidden');
+        boxB.classList.remove('hidden');
+        loadTrial(current_pairs[currentTrial], flip_array[currentTrial + currentBatch * trials_per_batch]);
+        return;
+      }
+
+      if (e.key === 'ArrowLeft') {
+        currentSelection = 'A';
+        boxA.classList.add('selected');
+        boxB.classList.remove('selected');
+      } else if (e.key === 'ArrowRight') {
+        currentSelection = 'B';
+        boxB.classList.add('selected');
+        boxA.classList.remove('selected');
+      } else if (e.key === ' ' && currentSelection && breakScreen.style.display !== 'block') {
+        recordSelection(currentSelection);
+        currentSelection = null; // Reset selection
+        showNoiseImage(() => nextTrial());
+      }
+    });
+
+
+    finishBtn.addEventListener('click', () => {
+
+      const form = document.getElementById('form');
+      if (form.checkValidity()) {
+        const log = document.getElementById('log');
+        log.textContent = 'Thank you for completing the survey! Your responses have been recorded.';
+        form.style.display = 'none'; // Hide the form after submission
+        finishBtn.style.display = 'none'; // Hide finish button
+        // Store results of experiment and survey
+        let csv_results = 'id,batch,trial,imageA,imageB,Aselected,reactionTime,study,session\n';
+        results.forEach(r => {
+          csv_results += `${prolificId},${r.batch},${r.trial},${r.imageA},${r.imageB},${r.Aselected},${r.reactionTime},${studyId},${sessionId}\n`;
+        });
+
+        event.preventDefault();  // Prevent form reload
+
+        let csv_form = [];
+
+        const age = document.getElementById("Age").value;
+        const gender = document.getElementById("gender").value;
+        const otherGender = document.getElementById("otherGender").value;
+        // const visualProblem = document.getElementById("visualProblem").value;
+
+        csv_form.push(`Age,${age}\n`);
+
+        if (gender === "Other") {
+          csv_form += `Gender,${gender},${otherGender.normalize('NFD').replace(/[\u0300-\u036f]/g,"")}\n`;
+        } else {
+          csv_form += `Gender,${gender}\n`;
+        }
+
+        const visionConditionSelect = document.getElementById("visionCondition");
+        csv_form += `VisionCondition,${visionConditionSelect.value}\n`;
+
+        if (visionConditionSelect.value === "other") {
+          const otherVisionInput = document.querySelector('input[name="visionConditionOther"]');
+          if (otherVisionInput && otherVisionInput.value) {
+            csv_form += `VisionConditionOther,${otherVisionInput.value.normalize('NFD').replace(/[\u0300-\u036f]/g,"")}\n`;
+          }
+        }
+
+        const glassesInputs = document.getElementById("correctedVision").querySelectorAll("input");
+        for (let input of glassesInputs) {
+          if (input.checked) {
+            csv_form += `Corrective Lenses,${input.value}\n`;
+            break;
+          }
+        }
+
+        const hdrFam = document.getElementById("hdrFamiliarity").value;
+        csv_form += `HDR,${hdrFam}\n`;
+
+        const cgFam = document.getElementById("cgFamiliarity").value;
+        csv_form += `ComputerGraphics,${cgFam}\n`;
+
+        const photoTraininginputs = document.getElementById("PhotoTraining").querySelectorAll("input");
+        for (let input of photoTraininginputs) {
+          if (input.checked) {
+            csv_form += `PhotoTraining,${input.value}\n`;
+            break;
+          }
+        }
+
+        const photoFam = document.getElementById("photoFamiliarity").value;
+        csv_form += `Photography,${photoFam}\n`;
+
+        const photoEditingFam = document.getElementById("photoEditingFamiliarity").value;
+        csv_form += `PhotoEditing,${photoEditingFam}\n`;
+
+        const paintTrainingInputs = document.getElementById("PaintTraining").querySelectorAll("input");
+        for (let input of paintTrainingInputs) {
+          if (input.checked) {
+            csv_form += `PaintTraining,${input.value}\n`;
+            break;
+          }
+        }
+        const illustrationTrainingInputs = document.getElementById("IllustrationTraining").querySelectorAll("input");
+        for (let input of illustrationTrainingInputs) {
+          if (input.checked) {
+            csv_form += `IllustrationTraining,${input.value}\n`;
+            break;
+          }
+        }
+
+        const artisticArtsFam = document.getElementById("artisticArtsFamiliarity").value;
+        csv_form += `ArtisticArts,${artisticArtsFam}\n`;
+
+        const strategy = document.getElementById("brightnessStrategy").value;
+        csv_form += `Strategy,${strategy.normalize('NFD').replace(/[\u0300-\u036f]/g,"")}\n`;
+
+        // Get the screen size and pixel density
+        const screenWidth = window.screen.width;
+        const screenHeight = window.screen.height;
+        const pixelDensity = window.devicePixelRatio;
+        csv_form += `ScreenWidth,${screenWidth}\n`;
+        csv_form += `ScreenHeight,${screenHeight}\n`;
+        csv_form += `PixelDensity,${pixelDensity}\n`;
+
+        // Combine both CSV strings into one payload
+        const payload = {
+          timestamp: new Date().toISOString(),
+          resultsCSV: csv_results,
+          formCSV: csv_form,
+          pID: prolificId,
+        };
+
+        // Send to your Cloud Function
+        fetch('https://storecsvexp2-327367429339.europe-west1.run.app', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        .then(response => {
+          if (response.ok) {
+            console.log('Data successfully sent');
+          } else {
+            console.error('Failed to send data');
+          }
+        })
+        .catch(error => {
+          console.error('Error sending data:', error);
+        });
+
+        // Redirect to Prolific
+        // window.location.href = `https://app.prolific.com/submissions/complete?cc=C1F4QUSF`;
+
+      } else {
+        alert('Please fill out all required fields before submitting.');
+      }
+    });
+
+    // Start first trial
+    loadTrial(trainingPairs[currentTrial]);
+  </script>
+</body>
+</html>
