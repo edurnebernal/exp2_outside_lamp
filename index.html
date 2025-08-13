@@ -677,12 +677,39 @@
         .then(response => {
           if (response.ok) {
             console.log('Data successfully sent');
+            log.textContent = 'Thank you for completing the survey! Your responses have been recorded.';
+            form.style.display = 'none'; // Hide the form after submission
+            finishBtn.style.display = 'none'; // Hide finish button
           } else {
             console.error('Failed to send data');
+            log.textContent = 'WARNING: An error occurred while recording the data. \n' + 'The data should have been automatically downloaded to your computer. Please contact the researcher to provide the data file.';
+            form.style.display = 'none'; // Hide the form after submission
+            finishBtn.style.display = 'none'; // Hide finish button
+            // Download the CSV as a fallback
+            const blob = new Blob([csv_results + csv_form], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `experiment_results.csv` + `_${prolificId}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
           }
         })
         .catch(error => {
+          log.textContent = 'WARNING: An error occurred while recording the data. \n' + 'The data should have been automatically downloaded to your computer. Please contact the researcher to provide the data file.';
+          form.style.display = 'none'; // Hide the form after submission
+          finishBtn.style.display = 'none'; // Hide finish button
           console.error('Error sending data:', error);
+          // Download the CSV as a fallback
+          const blob = new Blob([csv_results + csv_form], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `experiment_results.csv` + `_${prolificId}.csv`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
         });
 
         // Redirect to Prolific
