@@ -690,7 +690,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `experiment_results.csv` + `_${prolificId}.csv`;
+            a.download = `experiment_results` + `_${prolificId}.csv`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
@@ -706,7 +706,7 @@
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = `experiment_results.csv` + `_${prolificId}.csv`;
+          a.download = `experiment_results` + `_${prolificId}.csv`;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
